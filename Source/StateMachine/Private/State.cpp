@@ -1,4 +1,29 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "State.h"
+
+UState::UState()
+{
+}
+
+void UState::InitState(class UStateMachineComponent* stateMachine)
+{
+	m_StateMachine = stateMachine;
+	OnStateInit(stateMachine);
+}
+
+void UState::OnStateInit_Implementation(UStateMachineComponent* stateMachine)
+{
+}
+
+void UState::ExitState_Implementation()
+{
+}
+
+void UState::TickState_Implementation(float deltaTime)
+{
+}
+
+void UState::EnterState_Implementation()
+{
+}

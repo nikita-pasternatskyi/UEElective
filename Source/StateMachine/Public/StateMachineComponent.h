@@ -7,10 +7,11 @@
 #include "StateMachineComponent.generated.h"
 
 
-UCLASS(BLueprintable)
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class STATEMACHINE_API UStateMachineComponent : public UActorComponent
 {
 	GENERATED_BODY()
+	friend class UState;
 
 public:
 	UStateMachineComponent();
@@ -20,15 +21,14 @@ protected:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 private:
-	UPROPERTY(EditAnywhere)
-	class UState* PureStatePtr;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UState> m_InitialState;
 
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<class UState> StateTObjectPtr;
+	UPROPERTY(VisibleAnywhere)
+	UState* m_CurrentState;
 
-	UPROPERTY(EditAnywhere)
-	TSoftClassPtr<class UState> SoftStateClassPtr;
+	TMap<TSubclassOf<UState>, UState*> m_StatesMap;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UState> TSubclassStateClass;
+	UFUNCTION(BlueprintCallable)
+	void ChangeState(TSubclassOf<UState> NewState);
 };
