@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Player/PlayerInputStamp/PlayerInputStamp.h"
 #include "StateMachine/Public/StateMachineComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -46,6 +47,8 @@ AUEElectiveCharacter::AUEElectiveCharacter()
 	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
+
+	m_PlayerInputStamp = CreateDefaultSubobject<UPlayerInputStamp>(TEXT("Player Input Stamp"));
 	StateMachine = CreateDefaultSubobject<UStateMachineComponent>(TEXT("State Machine"));
 	
 	// Create a follow camera
@@ -78,17 +81,9 @@ void AUEElectiveCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 	
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
-		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-
-		// Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AUEElectiveCharacter::Move);
-
-		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUEElectiveCharacter::Look);
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		m_PlayerInputStamp->BindActions(EnhancedInputComponent);
 	}
 	else
 	{

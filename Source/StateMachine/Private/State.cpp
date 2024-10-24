@@ -12,7 +12,7 @@ void UState::InitState(class UStateMachineComponent* stateMachine)
 	OnStateInit(stateMachine);
 }
 
-void UState::OnStateInit_Implementation(UStateMachineComponent* stateMachine)
+void UState::EnterState_Implementation()
 {
 }
 
@@ -24,6 +24,6 @@ void UState::TickState_Implementation(float deltaTime)
 {
 }
 
-void UState::EnterState_Implementation()
+void UState::OnStateInit_Implementation(UStateMachineComponent* stateMachine)
 {
 }

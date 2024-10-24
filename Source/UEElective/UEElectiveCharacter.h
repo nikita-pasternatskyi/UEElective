@@ -7,11 +7,12 @@
 #include "Logging/LogMacros.h"
 #include "UEElectiveCharacter.generated.h"
 
+struct FInputActionValue;
+class UPlayerInputStamp;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
-class UInputAction;
-struct FInputActionValue;
+class UStateMachineComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -19,7 +20,8 @@ UCLASS(config=Game)
 class AUEElectiveCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+	
+private:
 	//Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -28,20 +30,14 @@ class AUEElectiveCharacter : public ACharacter
 	UCameraComponent* FollowCamera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine, meta = (AllowPrivateAccess = "true"))
-	class UStateMachineComponent* StateMachine;
+	UStateMachineComponent* StateMachine;
 
 	//Input
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine, meta = (AllowPrivateAccess = "true"))
+	UPlayerInputStamp* m_PlayerInputStamp;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* MoveAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* LookAction;
 
 public:
 	AUEElectiveCharacter();
@@ -55,9 +51,8 @@ protected:
 	virtual void BeginPlay();
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 private:
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
+	void Move(const FInputActionValue& value);
+	void Look(const FInputActionValue& value);
 };
 
