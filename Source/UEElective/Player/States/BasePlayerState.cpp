@@ -19,6 +19,7 @@ void UBasePlayerState::OnStateInit_Implementation(UStateMachineComponent* stateM
 {
 	Super::OnStateInit_Implementation(stateMachine);
 	m_OwningCharacter = Cast<AUEElectiveCharacter>(stateMachine->GetOwner());
+	m_PlayerInput = m_OwningCharacter->GetPlayerInput();
 	OnPlayerStateInit(stateMachine, m_OwningCharacter);
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Player State init");
 }

@@ -42,6 +42,8 @@ private:
 public:
 	AUEElectiveCharacter();
 
+	FORCEINLINE class UPlayerInputStamp* GetPlayerInput() const {return m_PlayerInputStamp;}
+	
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
@@ -52,7 +54,9 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
-	void Move(const FInputActionValue& value);
-	void Look(const FInputActionValue& value);
+	UFUNCTION(BlueprintCallable)
+	void Move(const FVector2D& value);
+	UFUNCTION(BlueprintCallable)
+	void Look(const FVector2D& value);
 };
 

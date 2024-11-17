@@ -22,6 +22,9 @@ protected:
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 private:
 	UPROPERTY(EditDefaultsOnly)
+	bool m_bDebug;
+	
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UState> m_InitialState;
 
 	UPROPERTY(VisibleAnywhere)

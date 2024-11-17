@@ -91,11 +91,8 @@ void AUEElectiveCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 }
 
-void AUEElectiveCharacter::Move(const FInputActionValue& Value)
+void AUEElectiveCharacter::Move(const FVector2D& MovementVector)
 {
-	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
-
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -114,15 +111,14 @@ void AUEElectiveCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-void AUEElectiveCharacter::Look(const FInputActionValue& Value)
+void AUEElectiveCharacter::Look(const FVector2D& value)
 {
 	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
 		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
+		AddControllerYawInput(value.X);
+		AddControllerPitchInput(value.Y);
 	}
 }

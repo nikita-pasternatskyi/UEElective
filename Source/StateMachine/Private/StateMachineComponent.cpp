@@ -35,6 +35,11 @@ void UStateMachineComponent::ChangeState(TSubclassOf<UState> NewState)
 		m_CurrentState->ExitState();
 	}
 
+	if(m_bDebug)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, "Entering State: " + NewState->GetName());
+	}
+	
 	UState* newStateInstance = nullptr;
 	if(m_StatesMap.Contains(NewState))
 	{

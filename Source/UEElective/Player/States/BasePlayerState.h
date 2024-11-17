@@ -8,6 +8,7 @@
 #include "BasePlayerState.generated.h"
 
 class AUEElectiveCharacter;
+class UPlayerInputStamp;
 
 UCLASS()
 class UEELECTIVE_API UBasePlayerState : public UState
@@ -23,8 +24,10 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnPlayerStateInit(UStateMachineComponent* stateMachine, AUEElectiveCharacter* character);
 	
-	UFUNCTION(BlueprintCallable)
-	AUEElectiveCharacter* GetOwningCharacter() const {return m_OwningCharacter;}
 private:
+	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly, meta = (AllowPrivateAccess = true))
+	UPlayerInputStamp* m_PlayerInput;
+
+	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly, meta = (AllowPrivateAccess = true))
 	AUEElectiveCharacter* m_OwningCharacter;
 };
