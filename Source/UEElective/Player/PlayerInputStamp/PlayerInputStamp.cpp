@@ -29,6 +29,10 @@ void UPlayerInputStamp::BindActions(UEnhancedInputComponent* EnhancedInputCompon
 	EnhancedInputComponent->BindAction(m_UseItem, ETriggerEvent::Started, this, &UPlayerInputStamp::StartUseItem);
 	EnhancedInputComponent->BindAction(m_UseItem, ETriggerEvent::Ongoing, this, &UPlayerInputStamp::UseItem);
 	EnhancedInputComponent->BindAction(m_UseItem, ETriggerEvent::Completed, this, &UPlayerInputStamp::StopUseItem);
+	
+	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Started, this, &UPlayerInputStamp::StartSprint);
+	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Ongoing, this, &UPlayerInputStamp::Sprint);
+	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Completed, this, &UPlayerInputStamp::StopSprint);
 
 	
 	EnhancedInputComponent->BindAction(m_MoveAction, ETriggerEvent::Triggered, this, &UPlayerInputStamp::Move);
@@ -67,6 +71,21 @@ void UPlayerInputStamp::StopJump(const FInputActionValue& Value)
 void UPlayerInputStamp::Jumping(const FInputActionValue& Value)
 {
 	JumpValue = {Value, true, false, false};
+}
+
+void UPlayerInputStamp::StartSprint(const FInputActionValue& Value)
+{
+	SprintValue = {Value, true, true, false};
+}
+
+void UPlayerInputStamp::StopSprint(const FInputActionValue& Value)
+{
+	SprintValue = {Value, false, false, true};
+}
+
+void UPlayerInputStamp::Sprint(const FInputActionValue& Value)
+{
+	SprintValue =  {Value, true, false, false};
 }
 
 void UPlayerInputStamp::StartSlide(const FInputActionValue& Value)

@@ -28,6 +28,8 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 void UStateMachineComponent::ChangeState(TSubclassOf<UState> NewState)
 {
+	if(NewState == nullptr)
+		return;
 	if(m_CurrentState != nullptr)
 	{
 		if(m_CurrentState->StaticClass() == NewState)
@@ -50,6 +52,7 @@ void UStateMachineComponent::ChangeState(TSubclassOf<UState> NewState)
 		UClass* typeClass = NewState;
 		newStateInstance = NewObject<UState>(this, typeClass);
 		newStateInstance->InitState(this);
+		AddReplicatedSubObject(newStateInstance);
 		m_StatesMap.Add(NewState, newStateInstance);
 	}
 	

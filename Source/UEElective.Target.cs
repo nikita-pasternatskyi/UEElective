@@ -16,6 +16,6 @@ public class UEElectiveTarget : TargetRules
 
 	private void RegisterModulesCreatedByRider()
 	{
-		ExtraModuleNames.AddRange(new string[] { "StateMachine" });
+		ExtraModuleNames.AddRange(new string[] { "StateMachine", "CameraTransitions" });
 	}
 }

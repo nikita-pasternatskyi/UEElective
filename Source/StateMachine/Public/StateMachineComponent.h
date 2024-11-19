@@ -27,9 +27,10 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UState> m_InitialState;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess=true))
 	UState* m_CurrentState;
 
+	UPROPERTY()
 	TMap<TSubclassOf<UState>, UState*> m_StatesMap;
 
 	UFUNCTION(BlueprintCallable)

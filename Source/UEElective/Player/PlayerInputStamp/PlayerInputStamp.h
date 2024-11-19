@@ -34,6 +34,8 @@ public:
 	FPlayerInputActionState AltAttackValue;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
 	FPlayerInputActionState UseItemValue;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
+	FPlayerInputActionState SprintValue;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -57,12 +59,20 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* m_UseItem;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* m_Sprint;
+
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void StartJump(const FInputActionValue& Value);
 	void StopJump(const FInputActionValue& Value);
 	void Jumping(const FInputActionValue& Value);
+
+	
+	void StartSprint(const FInputActionValue& Value);
+	void StopSprint(const FInputActionValue& Value);
+	void Sprint(const FInputActionValue& Value);
 
 	void StartSlide(const FInputActionValue& Value);
 	void StopSlide(const FInputActionValue& Value);
