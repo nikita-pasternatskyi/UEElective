@@ -22,16 +22,20 @@ protected:
 	
 private:
 	FCameraSettingsState m_CurrentSettings;
-	FCameraSettingsState m_AppliedSettings;
 
 	void Lerp(float t);
 	
 public:
 	USpringArmComponent* m_SpringArmComponent;
 	UCameraComponent* m_CameraComponent;
+	UPROPERTY(EditAnywhere)
+	bool CreateStateOnBeginPlay;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeCameraSettingsState(const FCameraSettingsState& NewCameraSettingsState);
+	
+	UFUNCTION(BlueprintCallable)
+	void ImmediateChangeCameraSettingsState(const FCameraSettingsState& NewCameraSettingsState);
 };

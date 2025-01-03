@@ -11,6 +11,13 @@ UCameraTransitionerComponent::UCameraTransitionerComponent()
 void UCameraTransitionerComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	if(!CreateStateOnBeginPlay)
+		return;
+	m_CurrentSettings = FCameraSettingsState(
+		m_SpringArmComponent->TargetArmLength,
+		m_CameraComponent->FieldOfView,
+		m_SpringArmComponent->SocketOffset,
+		1.0);
 }
 
 void UCameraTransitionerComponent::Lerp(float t)
@@ -35,5 +42,14 @@ void UCameraTransitionerComponent::ChangeCameraSettingsState(const FCameraSettin
 	if(m_CurrentSettings == NewCameraSettingsState)
 		return;
 	m_CurrentSettings = NewCameraSettingsState;
+}
+
+void UCameraTransitionerComponent::ImmediateChangeCameraSettingsState(
+	const FCameraSettingsState& NewCameraSettingsState)
+{
+	if(m_CurrentSettings == NewCameraSettingsState)
+		return;
+	m_CurrentSettings = NewCameraSettingsState;
+	Lerp(1);
 }
 
