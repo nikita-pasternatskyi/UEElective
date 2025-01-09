@@ -29,13 +29,13 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
 	FPlayerInputActionState SlideValue;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
+	FPlayerInputActionState SprintValue;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
 	FPlayerInputActionState MainAttackValue;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
 	FPlayerInputActionState AltAttackValue;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
 	FPlayerInputActionState UseItemValue;
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Input")
-	FPlayerInputActionState SprintValue;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -51,6 +51,8 @@ private:
 	UInputAction* m_SlideAction;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* m_Sprint;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* m_MainAttack;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -59,8 +61,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* m_UseItem;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* m_Sprint;
 
 private:
 	void Move(const FInputActionValue& Value);

@@ -33,7 +33,6 @@ void UPlayerInputStamp::BindActions(UEnhancedInputComponent* EnhancedInputCompon
 	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Started, this, &UPlayerInputStamp::StartSprint);
 	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Ongoing, this, &UPlayerInputStamp::Sprint);
 	EnhancedInputComponent->BindAction(m_Sprint, ETriggerEvent::Completed, this, &UPlayerInputStamp::StopSprint);
-
 	
 	EnhancedInputComponent->BindAction(m_MoveAction, ETriggerEvent::Triggered, this, &UPlayerInputStamp::Move);
 	EnhancedInputComponent->BindAction(m_MoveAction, ETriggerEvent::Completed, this, &UPlayerInputStamp::Move);
