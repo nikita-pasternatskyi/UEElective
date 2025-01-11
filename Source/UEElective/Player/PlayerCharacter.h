@@ -13,6 +13,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UCameraTransitionerComponent;
 class UInputAction;
+class UPrimitiveComponent;
 
 UENUM(BlueprintType)
 enum EPlayerState
@@ -107,6 +108,9 @@ private:
 	FHitResult RayCast(const FVector& direction, const FCollisionQueryParams& traceParams, const float length) const; 
 
 	float m_lastEdgeGrabTime;
+
+	bool m_climbedUp;
+	float m_lastClimbedUpTime;
 	
 private:
 	UFUNCTION(BlueprintCallable)

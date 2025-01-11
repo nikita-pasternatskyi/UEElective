@@ -254,7 +254,7 @@ void APlayerCharacter::StartJump(const FInputActionValue& value)
 			FHitResult rightHit = RayCast(GetActorRightVector() * -1.0f, traceParams, WallCheckLength);
 			FHitResult forwardHit = RayCast(GetActorForwardVector(), traceParams, WallCheckLength);
 			FHitResult backHit = RayCast(-GetActorForwardVector(), traceParams, WallCheckLength);
-
+			
 			FHitResult finalWall = leftHit;
 		
 			if(!rightHit.bBlockingHit && !leftHit.bBlockingHit && !forwardHit.bBlockingHit && !backHit.bBlockingHit)
@@ -270,14 +270,19 @@ void APlayerCharacter::StartJump(const FInputActionValue& value)
 
 			if(backHit.Distance < finalWall.Distance || (!rightHit.bBlockingHit && !forwardHit.bBlockingHit && !leftHit.bBlockingHit))
 				finalWall = backHit;
-
-			FVector pushForce = m_RelativeMovementInput * WallJumpPushForwardForce + finalWall.Normal * WallJumpPushAwayForce;
+			
 			float dotProduct = FVector::DotProduct(finalWall.Normal, m_RelativeMovementInput);
+			FVector pushForce = m_RelativeMovementInput * WallJumpPushForwardForce + finalWall.Normal * WallJumpPushAwayForce;
 			if(dotProduct <= -0.7f)
 			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::SanitizeFloat(GetCharacterMovement()->Velocity.Z));
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::SanitizeFloat(UGameplayStatics::GetTimeSeconds(GetWorld()) - m_lastClimbedUpTime));
+				if(UGameplayStatics::GetTimeSeconds(GetWorld()) - m_lastClimbedUpTime <= 2.0f)
+					return;
 				pushForce.X = 0;
 				pushForce.Y = 0;
 				pushForce += FVector::UpVector * WallJumpClimbUpForce;
+				m_lastClimbedUpTime = UGameplayStatics::GetTimeSeconds(GetWorld());
 			}
 			if(dotProduct <= -0.2f && dotProduct >= -0.7f)
 			{
@@ -301,7 +306,10 @@ void APlayerCharacter::StartJump(const FInputActionValue& value)
 			CurrentState = EPlayerState::InAir;
 			m_lastEdgeGrabTime = UGameplayStatics::GetRealTimeSeconds((GetWorld()));
 			GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-			LaunchCharacter(m_RelativeMovementInput * EdgeGrabForwardForce + GetActorUpVector() * EdgeGrabJumpForce, true, true);
+			FVector boost = FVector::ZeroVector;
+			if(m_RelativeMovementInput.Dot(GetActorForwardVector())< -0.75f)
+				boost = m_RelativeMovementInput * WallJumpWeakPushAwayForce;
+			LaunchCharacter(m_RelativeMovementInput * EdgeGrabForwardForce + GetActorUpVector() * EdgeGrabJumpForce + boost, true, true);
 		}
 		break;
 	default:
